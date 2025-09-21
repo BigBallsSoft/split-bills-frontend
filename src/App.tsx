@@ -1,18 +1,28 @@
-import { useState } from 'react'
+// import { useEffect, useState } from 'react'
+// import {useLaunchParams, setMiniAppBackgroundColor, init, mountMiniAppSync, openQrScanner} from '@telegram-apps/sdk-react'
 
-function App() {
-  const [count, setCount] = useState(0)
+import Tabs from './router/Tabs';
+import { AppRoot } from '@telegram-apps/telegram-ui';
+import '@telegram-apps/telegram-ui/dist/styles.css';
+import { Outlet } from 'react-router';
+
+export default function App() {
+  // const { tgWebAppData } = useLaunchParams();
+  // const [user, setUser] = useState<unknown>(null);
+
+  // useEffect(() => {
+  //   init();
+  //   mountMiniAppSync()
+  //   setMiniAppBackgroundColor('#ffffff');
+  //   if (tgWebAppData && tgWebAppData.user) {
+  //     setUser(tgWebAppData.user);
+  //   }
+  // }, []);
 
   return (
-    <>
-      <h1>Vite + React</h1>
-      <div>
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-      </div>
-    </>
-  )
+    <AppRoot>
+      <Outlet />
+      <Tabs />
+    </AppRoot>
+  );
 }
-
-export default App
