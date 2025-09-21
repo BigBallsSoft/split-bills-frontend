@@ -1,0 +1,10 @@
+@use 'reset.css';
+@use 'normalize.css';
+
+#app-bg {
+  background-color: var(--tgui--bg_color);
+  height: 100vh;
+  padding-bottom: var(--tgui--safe_area_inset_bottom);
+  box-sizing: border-box;
+  padding-top: 1px;
+}
