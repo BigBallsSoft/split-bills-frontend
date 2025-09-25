@@ -1,39 +1,42 @@
 import { useEffect, useRef } from 'react';
-import {
-  setMiniAppHeaderColor,
-  setMiniAppBackgroundColor,
-  init,
-  mountMiniAppSync,
-} from '@telegram-apps/sdk-react';
-
 import Tabs from './router/Tabs';
-import { AppRoot } from '@telegram-apps/telegram-ui';
+import { useLaunchParams } from '@telegram-apps/sdk-react';
+import { AppRoot, Spinner } from '@telegram-apps/telegram-ui';
 import '@telegram-apps/telegram-ui/dist/styles.css';
 import { Outlet } from 'react-router';
-import Color from 'color';
+import { setTgTheme } from './helpers/theme';
+import { type RootStateStore } from './store';
+import { useSelector } from 'react-redux';
+import { useLoginMutation } from './store/api/user.api';
+import { useActions } from './helpers/use-actions';
 
 export default function App() {
   const appBgElement = useRef<HTMLDivElement>(null);
+  const { tgWebAppData } = useLaunchParams();
+  const { token } = useSelector((state: RootStateStore) => state.user);
+  const { login: loginAction } = useActions();
+  const [login, { isLoading, isError, isSuccess, data }] = useLoginMutation();
 
   useEffect(() => {
-    init();
-    mountMiniAppSync();
-    if (appBgElement.current) {
-      const appHeaderColor = window
-        .getComputedStyle(appBgElement.current)
-        .getPropertyValue('--tgui--bg_color');
-      const appBottomColor = window
-        .getComputedStyle(appBgElement.current)
-        .getPropertyValue('--tgui--surface_primary');
+    setTgTheme(appBgElement.current);
+    if (tgWebAppData?.user) {
+      const { user } = tgWebAppData;
 
-      if (appBottomColor) {
-        setMiniAppBackgroundColor(new Color(appBottomColor).hex());
-      }
-      if (appHeaderColor) {
-        setMiniAppHeaderColor(appHeaderColor);
-      }
+      const name = `${user.first_name} ${user.last_name}`.trim();
+      login({
+        name,
+        username: user.username,
+        avatar: user.photo_url,
+        telegramId: user.id,
+      });
     }
   }, []);
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      loginAction({ token: data.accessToken });
+    }
+  }, [isLoading]);
 
   return (
     <AppRoot>
@@ -41,8 +44,14 @@ export default function App() {
         ref={appBgElement}
         id="app-bg"
       >
-        <Outlet />
-        <Tabs />
+        {isLoading && <Spinner size="l" />}
+        {isError && <div>Error during authentification</div>}
+        {isSuccess && token && (
+          <>
+            <Outlet />
+            <Tabs />
+          </>
+        )}
       </div>
     </AppRoot>
   );
