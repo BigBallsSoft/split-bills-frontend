@@ -1,7 +1,7 @@
 import { Tabbar } from '@telegram-apps/telegram-ui';
 import { useLocation, useNavigate } from 'react-router';
 import { FaHandHoldingDollar } from 'react-icons/fa6';
-import { MdAttachMoney } from 'react-icons/md';
+import { MdAttachMoney, MdAccountCircle } from 'react-icons/md';
 
 export default function Tabs() {
   const { pathname } = useLocation();
@@ -14,9 +14,14 @@ export default function Tabs() {
       icon: <MdAttachMoney size={22} />,
     },
     {
-      path: '/fees',
-      text: 'Fees',
+      path: '/splits',
+      text: 'Splits',
       icon: <FaHandHoldingDollar size={22} />,
+    },
+    {
+      path: '/account',
+      text: 'Account',
+      icon: <MdAccountCircle size={22} />,
     },
   ];
 

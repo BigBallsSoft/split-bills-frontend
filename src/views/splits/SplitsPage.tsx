@@ -1,11 +1,11 @@
 import HeaderTotal from '@/components/HeaderTotal';
 
-function DebtsPage() {
+function SplitsPage() {
   return (
     <div className="flex flex-col">
-      <HeaderTotal title="20 BYN" />
+      <HeaderTotal title="30 BYN" />
     </div>
   );
 }
 
-export default DebtsPage;
+export default SplitsPage;

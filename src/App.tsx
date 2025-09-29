@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import Tabs from './router/Tabs';
 import { useLaunchParams } from '@telegram-apps/sdk-react';
-import { AppRoot, Spinner } from '@telegram-apps/telegram-ui';
+import { AppRoot, Snackbar, Spinner } from '@telegram-apps/telegram-ui';
 import '@telegram-apps/telegram-ui/dist/styles.css';
 import { Outlet } from 'react-router';
 import { setTgTheme } from './helpers/theme';
@@ -9,12 +9,14 @@ import { type RootStateStore } from './store';
 import { useSelector } from 'react-redux';
 import { useLoginMutation } from './store/api/user.api';
 import { useActions } from './helpers/use-actions';
+import { FaCircleInfo } from 'react-icons/fa6';
 
 export default function App() {
   const appBgElement = useRef<HTMLDivElement>(null);
   const { tgWebAppData } = useLaunchParams();
   const { token } = useSelector((state: RootStateStore) => state.user);
-  const { login: loginAction } = useActions();
+  const { isToastOpen, toastMessage } = useSelector((state: RootStateStore) => state.toast);
+  const { login: loginAction, hideToast } = useActions();
   const [login, { isLoading, isError, isSuccess, data }] = useLoginMutation();
 
   useEffect(() => {
@@ -23,6 +25,7 @@ export default function App() {
       const { user } = tgWebAppData;
 
       const name = `${user.first_name} ${user.last_name}`.trim();
+
       login({
         name,
         username: user.username,
@@ -44,13 +47,25 @@ export default function App() {
         ref={appBgElement}
         id="app-bg"
       >
-        {isLoading && <Spinner size="l" />}
-        {isError && <div>Error during authentification</div>}
+        {isLoading && (
+          <Spinner
+            size="l"
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          />
+        )}
+        {isError && <div className="m-4">Error during authentification</div>}
         {isSuccess && token && (
           <>
             <Outlet />
             <Tabs />
           </>
+        )}
+        {isToastOpen && (
+          <Snackbar
+            before={<FaCircleInfo />}
+            onClose={hideToast}
+            description={toastMessage}
+          />
         )}
       </div>
     </AppRoot>

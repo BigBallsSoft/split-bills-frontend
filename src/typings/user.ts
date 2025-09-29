@@ -1,10 +1,22 @@
-export interface UserLoginData {
+export interface AuthResponse {
+  accessToken: string;
+}
+
+export interface User {
+  id: number;
   avatar?: string;
   username?: string;
   name: string;
   telegramId: number;
+  cardErip?: string;
+  cardNumber?: number;
+  bankOperationLinkId?: number;
+  notifyMessage?: string;
 }
 
-export interface AuthResponse {
-  accessToken: string;
-}
+export type UserLoginData = Pick<User, 'avatar' | 'username' | 'name' | 'telegramId'>;
+
+export type UserPatchData = Pick<
+  User,
+  'cardErip' | 'cardNumber' | 'bankOperationLinkId' | 'notifyMessage'
+>;

@@ -1,9 +1,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { reducer as userReducer } from './slices/user.slice';
+import { reducer as toastReducer } from './slices/toast.slice';
 import { baseApi } from './api/base-api';
 
 const reducers = combineReducers({
   user: userReducer,
+  toast: toastReducer,
   [baseApi.reducerPath]: baseApi.reducer,
 });
 

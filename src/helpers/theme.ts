@@ -11,7 +11,7 @@ export const setTgTheme = (appBgElement: HTMLDivElement | null) => {
   if (appBgElement) {
     const appHeaderColor = window
       .getComputedStyle(appBgElement)
-      .getPropertyValue('--tgui--bg_color');
+      .getPropertyValue('--tgui--surface_primary');
     const appBottomColor = window
       .getComputedStyle(appBgElement)
       .getPropertyValue('--tgui--surface_primary');
@@ -20,7 +20,7 @@ export const setTgTheme = (appBgElement: HTMLDivElement | null) => {
       setMiniAppBackgroundColor(new Color(appBottomColor).hex());
     }
     if (appHeaderColor) {
-      setMiniAppHeaderColor(appHeaderColor);
+      setMiniAppHeaderColor(new Color(appHeaderColor).hex());
     }
   }
 };

@@ -1,7 +1,8 @@
 import { createBrowserRouter, replace } from 'react-router';
 import App from '../App';
 import DebtsPage from '../views/debts/DebtsPage';
-import FeesPage from '../views/fees/FeesPage';
+import SplitsPage from '../views/splits/SplitsPage';
+import AccountPage from '@/views/account/AccountPage';
 
 export const router = createBrowserRouter([
   {
@@ -16,8 +17,12 @@ export const router = createBrowserRouter([
         Component: DebtsPage,
       },
       {
-        path: '/fees',
-        Component: FeesPage,
+        path: '/splits',
+        Component: SplitsPage,
+      },
+      {
+        path: '/account',
+        Component: AccountPage,
       },
     ],
   },

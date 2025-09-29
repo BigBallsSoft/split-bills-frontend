@@ -18,9 +18,9 @@ export const userSlice = createSlice({
       state.token = undefined;
       window.location.reload();
     },
-    login: (state, { payload: { token } }: PayloadAction<userState>) => {
+    login: (state, { payload: { token } }: PayloadAction<{ token: string }>) => {
       state.token = token;
-      localStorage.setItem(localStorageConfig.ACCESS_TOKEN, JSON.stringify(token));
+      localStorage.setItem(localStorageConfig.ACCESS_TOKEN, token);
     },
   },
 });

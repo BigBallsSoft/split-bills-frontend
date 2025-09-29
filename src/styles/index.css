@@ -1,0 +1,32 @@
+@import 'tailwindcss';
+
+#app-bg {
+  background-color: var(--tgui--bg_color);
+  height: 100vh;
+  padding-bottom: 7rem;
+  box-sizing: border-box;
+  padding-top: 1px;
+  overflow-y: auto;
+}
+
+.bg-primary {
+  background-color: var(--tgui--surface_primary);
+}
+
+.bg-quartenary {
+  background-color: var(--tgui--quartenary_bg_color);
+}
+
+.img-contain > img {
+  object-fit: contain;
+}
+
+.img-outer > img {
+  width: unset;
+  border-radius: 0;
+  position: static;
+}
+
+.block-text-center > span {
+  text-align: center;
+}
