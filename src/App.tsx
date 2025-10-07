@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import Tabs from './router/Tabs';
 import { useLaunchParams } from '@telegram-apps/sdk-react';
 import { AppRoot, Snackbar, Spinner } from '@telegram-apps/telegram-ui';
 import '@telegram-apps/telegram-ui/dist/styles.css';
@@ -57,7 +56,6 @@ export default function App() {
         {isSuccess && token && (
           <>
             <Outlet />
-            <Tabs />
           </>
         )}
         {isToastOpen && (

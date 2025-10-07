@@ -3,7 +3,6 @@
 #app-bg {
   background-color: var(--tgui--bg_color);
   height: 100vh;
-  padding-bottom: 7rem;
   box-sizing: border-box;
   padding-top: 1px;
   overflow-y: auto;
@@ -15,6 +14,18 @@
 
 .bg-quartenary {
   background-color: var(--tgui--quartenary_bg_color);
+}
+
+.text-subtitle {
+  color: var(--tgui--secondary_hint_color);
+}
+
+.bg-danger {
+  background-color: var(--tgui--destructive_text_color);
+}
+
+.color-danger {
+  color: var(--tgui--destructive_text_color);
 }
 
 .img-contain > img {
@@ -29,4 +40,8 @@
 
 .block-text-center > span {
   text-align: center;
+}
+
+.child-grow-0 > * {
+  flex-grow: 0;
 }

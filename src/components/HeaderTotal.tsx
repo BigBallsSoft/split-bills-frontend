@@ -1,7 +1,8 @@
 import { useLaunchParams } from '@telegram-apps/sdk-react';
 import { Avatar, FixedLayout, LargeTitle } from '@telegram-apps/telegram-ui';
+import type { ReactNode } from 'react';
 
-function HeaderTotal({ title }: { title: string }) {
+function HeaderTotal({ title }: { title: ReactNode }) {
   const { tgWebAppData } = useLaunchParams();
 
   return (

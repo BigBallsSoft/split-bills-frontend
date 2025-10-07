@@ -51,7 +51,6 @@ function AccountPage() {
         level="3"
         plain
         className="text-center"
-        onClick={() => showToast({ message: 'Edit' })}
       >
         {tgWebAppData?.user?.first_name} {tgWebAppData?.user?.last_name}
       </Title>

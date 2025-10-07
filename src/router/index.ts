@@ -3,6 +3,9 @@ import App from '../App';
 import DebtsPage from '../views/debts/DebtsPage';
 import SplitsPage from '../views/splits/SplitsPage';
 import AccountPage from '@/views/account/AccountPage';
+import TabsWrapper from './TabsWrapper';
+import CreateSplitPage from '@/views/splits/CreateSplitPage';
+import SplitPage from '@/views/splits/SplitPage';
 
 export const router = createBrowserRouter([
   {
@@ -13,16 +16,29 @@ export const router = createBrowserRouter([
     Component: App,
     children: [
       {
-        path: '/debts',
-        Component: DebtsPage,
+        Component: TabsWrapper,
+        children: [
+          {
+            path: '/debts',
+            Component: DebtsPage,
+          },
+          {
+            path: '/splits',
+            Component: SplitsPage,
+          },
+          {
+            path: '/account',
+            Component: AccountPage,
+          },
+        ],
       },
       {
-        path: '/splits',
-        Component: SplitsPage,
+        path: '/splits/create',
+        Component: CreateSplitPage,
       },
       {
-        path: '/account',
-        Component: AccountPage,
+        path: '/splits/:id',
+        Component: SplitPage,
       },
     ],
   },
