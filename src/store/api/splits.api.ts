@@ -10,7 +10,10 @@ export const splitsApi = baseApi.injectEndpoints({
         method: 'POST',
       }),
     }),
+    getMySplits: builder.query<Split[], void>({
+      query: () => '/splits/me',
+    }),
   }),
 });
 
-export const { useCreateSplitMutation } = splitsApi;
+export const { useCreateSplitMutation, useGetMySplitsQuery } = splitsApi;

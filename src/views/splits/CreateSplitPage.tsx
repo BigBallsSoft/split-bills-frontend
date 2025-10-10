@@ -55,7 +55,7 @@ function CreateSplitPage() {
   useEffect(() => {
     if (isSuccess) {
       showToast({ message: 'Split created successfully' });
-      navigate(`/splits/${data.id}`);
+      navigate(`/splits/${data.id}`, { replace: true });
     }
     if (isError) {
       showToast({ message: 'Error creating split' });
@@ -89,9 +89,12 @@ function CreateSplitPage() {
           <Input
             header="Amount"
             type="number"
-            placeholder="100"
+            placeholder="Split amount"
             value={amount}
-            onChange={(e) => setAmount(Number(e.target.value))}
+            onChange={(e) => {
+              setAmount(Number(e.target.value));
+              e.target.value = String(Number(e.target.value)); // remove leading zero
+            }}
           />
           <div className="grid grid-cols-2 mx-6 gap-y-3 gap-x-4 my-3">
             <Button

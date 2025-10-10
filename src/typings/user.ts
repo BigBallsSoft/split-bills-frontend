@@ -14,6 +14,8 @@ export interface User {
   notifyMessage?: string;
 }
 
+export type PublicUser = Pick<User, 'id' | 'avatar' | 'username' | 'name' | 'telegramId'>;
+
 export type UserLoginData = Pick<User, 'avatar' | 'username' | 'name' | 'telegramId'>;
 
 export type UserPatchData = Pick<

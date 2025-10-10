@@ -20,6 +20,10 @@
   color: var(--tgui--secondary_hint_color);
 }
 
+.text-indianred {
+  color: indianred;
+}
+
 .bg-danger {
   background-color: var(--tgui--destructive_text_color);
 }
@@ -44,4 +48,13 @@
 
 .child-grow-0 > * {
   flex-grow: 0;
+}
+
+.cell-full > div > h6 > span {
+  width: 100%;
+  overflow: visible;
+}
+
+.cell-full > div > h6 {
+  overflow: visible;
 }

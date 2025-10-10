@@ -2,7 +2,7 @@ import { Button, FixedLayout, Headline } from '@telegram-apps/telegram-ui';
 import type { ReactNode } from 'react';
 import { useNavigate } from 'react-router';
 
-function HeaderBack({ title }: { title: ReactNode }) {
+function HeaderBack({ title, backTitle }: { title: ReactNode; backTitle?: ReactNode }) {
   const navigate = useNavigate();
 
   return (
@@ -15,7 +15,7 @@ function HeaderBack({ title }: { title: ReactNode }) {
           mode="plain"
           onClick={() => navigate(-1)}
         >
-          Cancel
+          {backTitle || 'Cancel'}
         </Button>
       </div>
       <Headline weight="2">{title}</Headline>
