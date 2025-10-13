@@ -29,7 +29,7 @@ function DebtsPage() {
             {data && profile
               ? data
                   .flatMap((split) => split.debtors)
-                  .filter((debtor) => debtor.userId === profile.id)
+                  .filter((debtor) => debtor.userId === profile.id && !debtor.payDate)
                   .reduce((acc, debt) => acc + debt.amount, 0)
               : '0'}{' '}
             BYN
@@ -63,6 +63,11 @@ function DebtsPage() {
                   <Title
                     weight="1"
                     level="1"
+                    className={
+                      split.debtors.find((debtor) => debtor.userId === profile.id)?.payDate
+                        ? 'line-through'
+                        : ''
+                    }
                   >
                     {split.debtors.find((debtor) => debtor.userId === profile.id)?.amount || 0} BYN
                   </Title>
