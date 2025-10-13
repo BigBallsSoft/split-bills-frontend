@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useLaunchParams } from '@telegram-apps/sdk-react';
 import { AppRoot, Snackbar, Spinner } from '@telegram-apps/telegram-ui';
 import '@telegram-apps/telegram-ui/dist/styles.css';
-import { Outlet } from 'react-router';
+import { Outlet, useNavigate } from 'react-router';
 import { setTgTheme } from './helpers/theme';
 import { type RootStateStore } from './store';
 import { useSelector } from 'react-redux';
@@ -11,10 +11,13 @@ import { useActions } from './helpers/use-actions';
 import { FaCircleInfo } from 'react-icons/fa6';
 
 export default function App() {
+  const navigate = useNavigate();
   const appBgElement = useRef<HTMLDivElement>(null);
-  const { tgWebAppData } = useLaunchParams();
+  const { tgWebAppData, tgWebAppStartParam } = useLaunchParams();
   const { token } = useSelector((state: RootStateStore) => state.user);
-  const { isToastOpen, toastMessage } = useSelector((state: RootStateStore) => state.toast);
+  const { isToastOpen, toastMessage, duration } = useSelector(
+    (state: RootStateStore) => state.toast
+  );
   const { login: loginAction, hideToast } = useActions();
   const [login, { isLoading, isError, isSuccess, data }] = useLoginMutation();
 
@@ -31,6 +34,9 @@ export default function App() {
         avatar: user.photo_url,
         telegramId: user.id,
       });
+    }
+    if (tgWebAppStartParam) {
+      navigate(tgWebAppStartParam.replaceAll('_', '/'));
     }
   }, []);
 
@@ -53,16 +59,13 @@ export default function App() {
           />
         )}
         {isError && <div className="m-4">Error during authentification</div>}
-        {isSuccess && token && (
-          <>
-            <Outlet />
-          </>
-        )}
+        {isSuccess && token && <Outlet />}
         {isToastOpen && (
           <Snackbar
             before={<FaCircleInfo />}
             onClose={hideToast}
             description={toastMessage}
+            duration={duration}
           />
         )}
       </div>

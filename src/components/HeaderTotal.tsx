@@ -8,7 +8,7 @@ function HeaderTotal({ title }: { title: ReactNode }) {
   return (
     <FixedLayout
       vertical="top"
-      className="px-6 py-3 flex justify-between bg-primary"
+      className="px-6 py-3 flex justify-between bg-primary z-10"
     >
       <Avatar
         size={40}

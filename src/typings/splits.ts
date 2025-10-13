@@ -1,5 +1,5 @@
 import type { AddDebtorData, Debtor } from './debtors';
-import type { PublicUser } from './user';
+import type { CreatorUser, PublicUser } from './user';
 
 export interface AddSplitData {
   name: string;
@@ -7,10 +7,15 @@ export interface AddSplitData {
   debtors: AddDebtorData[];
 }
 
-export interface Split extends Omit<AddSplitData, 'debtors'> {
+export interface Split extends Omit<AddSplitData, 'debtors' | 'description'> {
   id: number;
   creationDate: string;
   debtors: Debtor[];
   creatorId: number;
   creator?: PublicUser;
+  description?: string;
+}
+
+export interface SplitExtended extends Omit<Split, 'creator'> {
+  creator: CreatorUser;
 }

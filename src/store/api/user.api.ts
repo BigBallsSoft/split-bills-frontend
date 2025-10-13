@@ -12,6 +12,7 @@ export const userApi = baseApi.injectEndpoints({
     }),
     me: builder.query<User, void>({
       query: () => '/users/me',
+      providesTags: ['User'],
     }),
     patchMe: builder.mutation<User, UserPatchData>({
       query: (userInfo: UserPatchData) => ({
@@ -19,6 +20,7 @@ export const userApi = baseApi.injectEndpoints({
         url: '/users/me',
         method: 'PATCH',
       }),
+      invalidatesTags: ['User'],
     }),
   }),
 });

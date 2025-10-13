@@ -49,8 +49,13 @@ function SplitsPage() {
               className="bg-primary px-4 rounded-2xl cell-full"
               onClick={() => navigate(`/splits/${split.id}`)}
             >
-              <div className="flex flex-col gap-1">
-                <Title level="3">{split.name}</Title>
+              <div className="flex flex-col gap-1 overflow-hidden">
+                <Title
+                  level="3"
+                  className="overflow-hidden text-ellipsis whitespace-nowrap"
+                >
+                  {split.name}
+                </Title>
                 <div className="flex justify-between items-center gap-1">
                   <Title
                     weight="1"

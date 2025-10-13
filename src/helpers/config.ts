@@ -1,5 +1,6 @@
 const env = {
   API_URL: import.meta.env.VITE_API_URL,
+  TG_APP_URL: import.meta.env.VITE_TG_APP_URL,
 };
 
 const checkConfig = (config: typeof env) => {

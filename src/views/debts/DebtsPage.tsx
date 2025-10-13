@@ -51,8 +51,13 @@ function DebtsPage() {
               onClick={() => navigate(`/splits/${split.id}`)}
             >
               <div className="flex justify-between">
-                <div className="flex flex-col gap-1">
-                  <Title level="3">{split.name}</Title>
+                <div className="flex flex-col gap-1 overflow-hidden">
+                  <Title
+                    level="3"
+                    className="text-ellipsis overflow-hidden whitespace-nowrap"
+                  >
+                    {split.name}
+                  </Title>
                   <Title
                     weight="1"
                     level="1"
@@ -65,7 +70,7 @@ function DebtsPage() {
                       : dayjs(split.creationDate).format('DD.MM.YYYY')}
                   </Subheadline>
                 </div>
-                <div className="flex flex-col justify-center gap-2 items-center">
+                <div className="flex flex-col justify-center gap-2 max-w-1/3">
                   <Avatar
                     size={48}
                     src={split.creator?.avatar}
@@ -73,8 +78,11 @@ function DebtsPage() {
                       .split(' ')
                       .map((word) => word[0])
                       .join('')}
+                    className="self-center"
                   />
-                  <Subheadline>{split.creator?.name}</Subheadline>
+                  <Subheadline className="text-ellipsis overflow-hidden whitespace-nowrap">
+                    {split.creator?.name}
+                  </Subheadline>
                 </div>
               </div>
             </Cell>
