@@ -6,16 +6,18 @@ import type { Debtor } from '@/typings/debtors';
 import type { SplitExtended } from '@/typings/splits';
 import { Button, Title } from '@telegram-apps/telegram-ui';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AiOutlineSignature } from 'react-icons/ai';
 
 function SplitDebtorActions({ split, debtor }: { split: SplitExtended; debtor?: Debtor }) {
+  const { t } = useTranslation();
   const { showToast } = useActions();
   const dispatch = useAppDispatch();
   const [patchDebtor, { isLoading, isError, isSuccess, data }] = usePatchDebtorMutation();
 
   useEffect(() => {
     if (isSuccess && data) {
-      showToast({ message: 'Payment confirm requested' });
+      showToast({ message: t('Payment confirm requested') });
       dispatch(
         splitsApi.util.updateQueryData('getSplitById', split.id, (draft) => {
           draft.debtors = split.debtors.map((d) => (d.id === data.id ? data : d));
@@ -23,7 +25,7 @@ function SplitDebtorActions({ split, debtor }: { split: SplitExtended; debtor?: 
       );
     }
     if (isError) {
-      showToast({ message: 'Error requesting payment confirm' });
+      showToast({ message: t('Error requesting payment confirm') });
     }
   }, [isLoading]);
 
@@ -43,14 +45,14 @@ function SplitDebtorActions({ split, debtor }: { split: SplitExtended; debtor?: 
           disabled={isLoading}
           onClick={handleRequestConfirmClick}
         >
-          Request payment confirm
+          {t('Request payment confirm')}
         </Button>
       ) : (
         <Title
           className="self-center"
           weight="1"
         >
-          You have already paid!
+          {t('You have already paid!')}
         </Title>
       )}
     </div>

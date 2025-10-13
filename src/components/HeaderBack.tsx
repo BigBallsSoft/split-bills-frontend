@@ -1,9 +1,11 @@
 import { Button, FixedLayout, Headline } from '@telegram-apps/telegram-ui';
 import type { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
 function HeaderBack({ title, backTitle }: { title: ReactNode; backTitle?: ReactNode }) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <FixedLayout
@@ -15,7 +17,7 @@ function HeaderBack({ title, backTitle }: { title: ReactNode; backTitle?: ReactN
           mode="plain"
           onClick={() => navigate(-1)}
         >
-          {backTitle || 'Cancel'}
+          {backTitle || t('Cancel')}
         </Button>
       </div>
       <Headline weight="2">{title}</Headline>

@@ -14,11 +14,13 @@ import {
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { FiPlusCircle } from 'react-icons/fi';
 import { LuTrash2 } from 'react-icons/lu';
 import { useNavigate } from 'react-router';
 
 function CreateSplitPage() {
+  const { t } = useTranslation();
   const [amount, setAmount] = useState(0);
   const [addDebtorName, setAddDebtorName] = useState('');
   const [selectedDebtors, setSelectedDebtors] = useState<string[]>([]);
@@ -54,17 +56,17 @@ function CreateSplitPage() {
 
   useEffect(() => {
     if (isSuccess) {
-      showToast({ message: 'Split created successfully' });
+      showToast({ message: t('Split created successfully') });
       navigate(`/splits/${data.id}`, { replace: true });
     }
     if (isError) {
-      showToast({ message: 'Error creating split' });
+      showToast({ message: t('Error creating split') });
     }
   }, [isLoading]);
 
   return (
     <div className="flex flex-col pt-14 pb-8">
-      <HeaderBack title="Create Split" />
+      <HeaderBack title={t('Create Split')} />
 
       <FormProvider {...methods}>
         <form
@@ -72,24 +74,24 @@ function CreateSplitPage() {
           onSubmit={handleSubmit((data) => createSplit(data))}
         >
           <Input
-            header="Name"
-            placeholder="Split name"
+            header={t('Name')}
+            placeholder={t('Split name')}
             {...register('name', { required: true })}
           />
           <Textarea
-            header="Description (Optional)"
-            placeholder="Split description"
+            header={t('Description (Optional)')}
+            placeholder={t('Split description')}
             {...register('description', { required: false, setValueAs: (v) => v || undefined })}
           />
           <div className="mx-6 text-subtitle">
             <Caption>
-              Split amount between debtors <br /> Type sum, choose debtors and split
+              {t('Split amount between debtors')} <br /> {t('Type sum, choose debtors and split')}
             </Caption>
           </div>
           <Input
-            header="Amount"
+            header={t('Amount')}
             type="number"
-            placeholder="Split amount"
+            placeholder={t('Split amount')}
             value={amount}
             onChange={(e) => {
               setAmount(Number(e.target.value));
@@ -102,27 +104,27 @@ function CreateSplitPage() {
               disabled={amount === 0 || selectedDebtors.length === 0}
               onClick={onSplitClick}
             >
-              Split
+              {t('Split')}
             </Button>
             <Button
               size="s"
               onClick={() => setSelectedDebtors(fields.map((f) => f.name))}
             >
-              Select All
+              {t('Select All')}
             </Button>
             <Button
               size="s"
               className="bg-danger"
               onClick={() => setAmount(0)}
             >
-              Clear Amount
+              {t('Clear Amount')}
             </Button>
             <Button
               size="s"
               mode="bezeled"
               onClick={() => setSelectedDebtors([])}
             >
-              Diselect All
+              {t('Diselect All')}
             </Button>
           </div>
           {fields.length > 0 && (
@@ -164,8 +166,8 @@ function CreateSplitPage() {
           <div className="flex items-center pr-5">
             <div className="flex-1">
               <Input
-                header="Name"
-                placeholder="Debtor name"
+                header={t('Name')}
+                placeholder={t('Debtor name')}
                 value={addDebtorName}
                 onChange={(e) => setAddDebtorName(e.target.value.trim())}
               />
@@ -189,7 +191,7 @@ function CreateSplitPage() {
             disabled={!formState.isValid || totalAmount === 0 || isLoading}
             type="submit"
           >
-            Create
+            {t('Create')}
           </Button>
         </form>
       </FormProvider>

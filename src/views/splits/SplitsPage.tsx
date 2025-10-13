@@ -8,12 +8,14 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { useEffect } from 'react';
 import { useActions } from '@/helpers/use-actions';
 import { useMeQuery } from '@/store/api/user.api';
+import { useTranslation } from 'react-i18next';
 
 dayjs.extend(relativeTime);
 
 const MaxDebtorsToDisplay = 8;
 
 function SplitsPage() {
+  const { t } = useTranslation();
   const { showToast } = useActions();
   const navigate = useNavigate();
   const { data, isLoading, isError } = useGetMySplitsQuery();
@@ -21,19 +23,19 @@ function SplitsPage() {
 
   useEffect(() => {
     if (isError) {
-      showToast({ message: 'Error fetching splits' });
+      showToast({ message: t('Error fetching splits') });
     }
   }, [isLoading]);
 
   useEffect(() => {
     if (isMeError) {
-      showToast({ message: 'Error fetching account' });
+      showToast({ message: t('Error fetching account') });
     }
   }, [isMeLoading]);
 
   const handleCreateSplitClick = () => {
     if (!me?.cardErip) {
-      showToast({ message: 'You need to fill your card info before creating a split' });
+      showToast({ message: t('You need to fill your card info before creating a split') });
       return;
     }
     navigate('/splits/create');
@@ -111,7 +113,7 @@ function SplitsPage() {
                   </div>
                   {split.debtors.length > MaxDebtorsToDisplay && (
                     <Caption className="text-subtitle">
-                      {split.debtors.length - MaxDebtorsToDisplay} more
+                      {split.debtors.length - MaxDebtorsToDisplay} {t('more')}
                     </Caption>
                   )}
                 </div>

@@ -9,8 +9,10 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { shareURL } from '@telegram-apps/sdk-react';
 import { config } from '@/helpers/config';
+import { useTranslation } from 'react-i18next';
 
 function SplitCreatorActions({ split }: { split: SplitExtended }) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { showToast, hideToast } = useActions();
   const [notifyDebtors, { data, isLoading, isError, isSuccess }] = useNotifyDebtorsMutation();
@@ -24,17 +26,17 @@ function SplitCreatorActions({ split }: { split: SplitExtended }) {
       showToast({ message: data.message });
     }
     if (isError) {
-      showToast({ message: 'Error notifying debtors' });
+      showToast({ message: t('Error notifying debtors') });
     }
   }, [isLoading]);
 
   useEffect(() => {
     if (isDeleteSuccess) {
-      showToast({ message: 'Split deleted' });
+      showToast({ message: t('Split deleted') });
       navigate('/splits');
     }
     if (isDeleteError) {
-      showToast({ message: 'Error deleting split' });
+      showToast({ message: t('Error deleting split') });
     }
   }, [isDeleteLoading]);
 
@@ -42,7 +44,7 @@ function SplitCreatorActions({ split }: { split: SplitExtended }) {
     showToast({
       message: (
         <>
-          <Text>Are you sure you want to delete this split?</Text>
+          <Text>{t('Are you sure you want to delete this split?')}</Text>
           <Button
             className="mt-3 bg-danger"
             size="s"
@@ -52,7 +54,7 @@ function SplitCreatorActions({ split }: { split: SplitExtended }) {
               hideToast();
             }}
           >
-            Delete split
+            {t('Delete split')}
           </Button>
         </>
       ),
@@ -66,7 +68,7 @@ function SplitCreatorActions({ split }: { split: SplitExtended }) {
         size="l"
         onClick={() => shareURL(`${config.TG_APP_URL}?startapp=splits_${split.id}`)}
       >
-        Share link
+        {t('Share link')}
       </Button>
       <Button
         before={<IoMdNotificationsOutline size={24} />}
@@ -75,7 +77,7 @@ function SplitCreatorActions({ split }: { split: SplitExtended }) {
         disabled={isLoading}
         onClick={() => notifyDebtors(split.id)}
       >
-        Notify debtors
+        {t('Notify debtors')}
       </Button>
       <Button
         size="l"
@@ -85,7 +87,7 @@ function SplitCreatorActions({ split }: { split: SplitExtended }) {
         before={<LuTrash2 size={24} />}
         onClick={handleDeleteClick}
       >
-        Delete
+        {t('Delete')}
       </Button>
     </div>
   );

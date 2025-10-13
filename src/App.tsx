@@ -9,8 +9,10 @@ import { useSelector } from 'react-redux';
 import { useLoginMutation } from './store/api/user.api';
 import { useActions } from './helpers/use-actions';
 import { FaCircleInfo } from 'react-icons/fa6';
+import { useTranslation } from 'react-i18next';
 
 export default function App() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const appBgElement = useRef<HTMLDivElement>(null);
   const { tgWebAppData, tgWebAppStartParam } = useLaunchParams();
@@ -58,7 +60,7 @@ export default function App() {
             className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
           />
         )}
-        {isError && <div className="m-4">Error during authentification</div>}
+        {isError && <div className="m-4">{t('Error during authentification')}</div>}
         {isSuccess && token && <Outlet />}
         {isToastOpen && (
           <Snackbar

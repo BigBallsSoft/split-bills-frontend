@@ -5,9 +5,11 @@ import { Modal, Cell, Image, Spinner, Card } from '@telegram-apps/telegram-ui';
 import { CardCell } from '@telegram-apps/telegram-ui/dist/components/Blocks/Card/components/CardCell/CardCell';
 import { useEffect, useMemo } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { IoIosArrowForward } from 'react-icons/io';
 
 function BanksModal() {
+  const { t } = useTranslation();
   const { showToast } = useActions();
   const { control, setValue } = useFormContext<UserPatchData>();
   const { isLoading, isError, isSuccess, data } = useGetBankOperationLinksQuery();
@@ -20,7 +22,7 @@ function BanksModal() {
 
   useEffect(() => {
     if (isError) {
-      showToast({ message: 'Error fetching bank operation links' });
+      showToast({ message: t('Error fetching bank operation links') });
     }
   }, [isLoading]);
 
@@ -41,7 +43,7 @@ function BanksModal() {
             )
           }
         >
-          {bankOperationLink ? bankOperationLink.name : 'Choose bank'}
+          {bankOperationLink ? bankOperationLink.name : t('Choose bank')}
         </Cell>
       }
     >

@@ -1,8 +1,11 @@
 import type { SplitExtended } from '@/typings/splits';
 import { Avatar, Button, Divider, Title } from '@telegram-apps/telegram-ui';
 import { openTelegramLink } from '@telegram-apps/sdk-react';
+import { useTranslation } from 'react-i18next';
 
 function SplitCreator({ split }: { split: SplitExtended }) {
+  const { t } = useTranslation();
+
   return (
     <div className="mx-5 mb-5">
       <div className="mb-5">
@@ -10,7 +13,7 @@ function SplitCreator({ split }: { split: SplitExtended }) {
           weight="2"
           level="3"
         >
-          Creator
+          {t('Creator')}
         </Title>
       </div>
       <div className="flex justify-between items-center gap-4 my-2">
@@ -27,7 +30,7 @@ function SplitCreator({ split }: { split: SplitExtended }) {
           size="s"
           onClick={() => openTelegramLink(`https://t.me/${split.creator.username}`)}
         >
-          Chat
+          {t('Chat')}
         </Button>
       </div>
       <div className="ms-14">

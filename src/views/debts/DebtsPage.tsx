@@ -5,9 +5,11 @@ import { useMeQuery } from '@/store/api/user.api';
 import { Avatar, Cell, Spinner, Subheadline, Title } from '@telegram-apps/telegram-ui';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
 function DebtsPage() {
+  const { t } = useTranslation();
   const { showToast } = useActions();
   const navigate = useNavigate();
   const { data, isLoading, isError } = useGetMyDebtsQuery();
@@ -15,7 +17,7 @@ function DebtsPage() {
 
   useEffect(() => {
     if (isError || isProfileError) {
-      showToast({ message: 'Error fetching debts' });
+      showToast({ message: t('Error fetching debts') });
     }
   }, [isLoading, isProfileLoading]);
 

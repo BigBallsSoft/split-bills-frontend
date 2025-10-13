@@ -21,8 +21,10 @@ import SplitCreatorActions from './SplitCreatorActions';
 import SplitDebtors from './SplitDebtors';
 import SplitCreator from './SplitCreator';
 import SplitDebtorActions from './SplitDebtorActions';
+import { useTranslation } from 'react-i18next';
 
 function SplitPage() {
+  const { t } = useTranslation();
   const params = useParams();
   const { tgWebAppData } = useLaunchParams();
 
@@ -31,7 +33,7 @@ function SplitPage() {
 
   useEffect(() => {
     if (isError) {
-      showToast({ message: 'Error fetching split' });
+      showToast({ message: t('Error fetching split') });
     }
   }, [isLoading]);
 
@@ -43,7 +45,7 @@ function SplitPage() {
   const handleCardNumberClick = () => {
     if (data?.creator?.cardNumber && !isCreator) {
       copyTextToClipboard(data.creator.cardNumber);
-      showToast({ message: 'Card number copied to clipboard' });
+      showToast({ message: t('Card number copied to clipboard') });
     }
   };
 
@@ -60,14 +62,14 @@ function SplitPage() {
       showToast({
         message: (
           <>
-            <Text>Card erip copied to clipboard</Text>
+            <Text>{t('Card erip copied to clipboard')}</Text>
             <Button
               className="mt-3"
               size="s"
               stretched
               onClick={() => openExternalLink(eripUrl)}
             >
-              Pay now
+              {t('Pay now')}
             </Button>
           </>
         ),
@@ -79,8 +81,8 @@ function SplitPage() {
   return (
     <div className="flex flex-col pt-14 pb-6">
       <HeaderBack
-        title="Split"
-        backTitle="Back"
+        title={t('Split')}
+        backTitle={t('Back')}
       />
       {isLoading && (
         <Spinner
@@ -111,7 +113,7 @@ function SplitPage() {
               weight="2"
               level="3"
             >
-              Credentials
+              {t('Credentials')}
             </Title>
             <Cell
               className="bg-primary px-4 rounded-2xl mt-2"
@@ -129,7 +131,7 @@ function SplitPage() {
             >
               {data.creator.bankOperationLink?.name}
               <div className="ml-2 inline">
-                <Caption className="text-subtitle">Card</Caption>
+                <Caption className="text-subtitle">{t('Card')}</Caption>
               </div>
               <div className="mt-2 text-subtitle">{data.creator.cardNumber}</div>
             </Cell>
@@ -149,7 +151,7 @@ function SplitPage() {
             >
               {data.creator.bankOperationLink?.name}
               <div className="ml-2 inline">
-                <Caption className="text-subtitle">ERIP</Caption>
+                <Caption className="text-subtitle">{t('ERIP')}</Caption>
               </div>
               <div className="mt-2 text-subtitle">{data.creator.cardErip}</div>
             </Cell>

@@ -6,6 +6,8 @@ import {
   Input,
   Textarea,
   Button,
+  SegmentedControl,
+  Text,
 } from '@telegram-apps/telegram-ui';
 import BanksModal from './BanksModal';
 import { useMeQuery, usePatchMeMutation } from '@/store/api/user.api';
@@ -13,10 +15,17 @@ import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import type { UserPatchData } from '@/typings/user';
 import { useActions } from '@/helpers/use-actions';
+import { SegmentedControlItem } from '@telegram-apps/telegram-ui/dist/components/Navigation/SegmentedControl/components/SegmentedControlItem/SegmentedControlItem';
+import { useSelector } from 'react-redux';
+import type { RootStateStore } from '@/store';
+import { LanguageKeys } from '@/typings/settings';
+import { useTranslation } from 'react-i18next';
 
 function AccountPage() {
+  const { t, i18n } = useTranslation();
   const { tgWebAppData } = useLaunchParams();
-  const { showToast } = useActions();
+  const { showToast, setLanguage } = useActions();
+  const { language } = useSelector((state: RootStateStore) => state.user);
   const { isLoading, isError, isSuccess, data } = useMeQuery();
   const [patchMe, { isLoading: isPatchMeLoading, isError: isPatchMeError }] = usePatchMeMutation();
   const methods = useForm<UserPatchData>();
@@ -29,15 +38,20 @@ function AccountPage() {
       setValue('cardNumber', data.cardNumber);
       setValue('notifyMessage', data.notifyMessage);
     } else if (isError) {
-      showToast({ message: 'Error fetching account' });
+      showToast({ message: t('Error fetching account') });
     }
   }, [isLoading]);
 
   useEffect(() => {
     if (isPatchMeError) {
-      showToast({ message: 'Error updating account' });
+      showToast({ message: t('Error updating account') });
     }
   }, [isPatchMeLoading]);
+
+  const handleLanguageChanged = (language: LanguageKeys) => {
+    i18n.changeLanguage(language);
+    setLanguage({ language });
+  };
 
   return (
     <div className="flex flex-col">
@@ -54,6 +68,23 @@ function AccountPage() {
       >
         {tgWebAppData?.user?.first_name} {tgWebAppData?.user?.last_name}
       </Title>
+      <div className="mt-6 mx-5">
+        <SegmentedControl>
+          <SegmentedControlItem
+            selected={language === LanguageKeys.RU}
+            onClick={() => handleLanguageChanged(LanguageKeys.RU)}
+          >
+            <Text>Русский</Text>
+          </SegmentedControlItem>
+          <SegmentedControlItem
+            selected={language === LanguageKeys.EN}
+            onClick={() => handleLanguageChanged(LanguageKeys.EN)}
+          >
+            <Text>English</Text>
+          </SegmentedControlItem>
+        </SegmentedControl>
+      </div>
+
       <FormProvider {...methods}>
         <form
           className="flex flex-col"
@@ -61,18 +92,18 @@ function AccountPage() {
         >
           <BanksModal />
           <Input
-            header="Account number for ERIP payment"
+            header={t('Account number for ERIP payment')}
             placeholder="1234567890"
             {...register('cardErip', { required: true })}
           />
           <Input
-            header="Card number"
+            header={t('Card number')}
             type="number"
             placeholder="0000 0000 0000 0000"
             {...register('cardNumber', { required: true })}
           />
           <Textarea
-            header="Notify message (Optional)"
+            header={t('Notify message (Optional)')}
             {...register('notifyMessage', { required: false, setValueAs: (v) => v || undefined })}
           />
           <Button
@@ -82,7 +113,7 @@ function AccountPage() {
             loading={isPatchMeLoading}
             type="submit"
           >
-            Confirm
+            {t('Confirm')}
           </Button>
         </form>
       </FormProvider>

@@ -8,8 +8,10 @@ import { useLaunchParams, openTelegramLink } from '@telegram-apps/sdk-react';
 import { FaCheck } from 'react-icons/fa';
 import { Avatar, Button, Divider, Title } from '@telegram-apps/telegram-ui';
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function SplitDebtors({ split, isCreator }: { split: SplitExtended; isCreator: boolean }) {
+  const { t } = useTranslation();
   const { tgWebAppData } = useLaunchParams();
   const { showToast } = useActions();
   const dispatch = useAppDispatch();
@@ -26,7 +28,7 @@ function SplitDebtors({ split, isCreator }: { split: SplitExtended; isCreator: b
 
   useEffect(() => {
     if (isSuccess && data) {
-      showToast({ message: 'Debt accepted' });
+      showToast({ message: t('Debt accepted') });
       dispatch(
         splitsApi.util.updateQueryData('getSplitById', split.id, (draft) => {
           draft.debtors = split.debtors.map((d) => (d.id === data.id ? data : d));
@@ -34,13 +36,13 @@ function SplitDebtors({ split, isCreator }: { split: SplitExtended; isCreator: b
       );
     }
     if (isError) {
-      showToast({ message: 'Error accepting debt' });
+      showToast({ message: t('Error accepting debt') });
     }
   }, [isLoading]);
 
   useEffect(() => {
     if (isConfirmSuccess && confirmData) {
-      showToast({ message: 'Payment confirmed' });
+      showToast({ message: t('Payment confirmed') });
       dispatch(
         splitsApi.util.updateQueryData('getSplitById', split.id, (draft) => {
           draft.debtors = split.debtors.map((d) => (d.id === confirmData.id ? confirmData : d));
@@ -48,7 +50,7 @@ function SplitDebtors({ split, isCreator }: { split: SplitExtended; isCreator: b
       );
     }
     if (isConfirmError) {
-      showToast({ message: 'Error confirming payment' });
+      showToast({ message: t('Error confirming payment') });
     }
   }, [isConfirmLoading]);
 
@@ -66,9 +68,9 @@ function SplitDebtors({ split, isCreator }: { split: SplitExtended; isCreator: b
   };
   const getDebtorText = (debtor: Debtor) => {
     if (isCreator) {
-      return debtor.isConfirmRequested ? 'Confirm' : 'Chat';
+      return debtor.isConfirmRequested ? t('Confirm') : t('Chat');
     } else if (!debtor.userId) {
-      return 'Take';
+      return t('Take');
     }
   };
 
@@ -91,7 +93,7 @@ function SplitDebtors({ split, isCreator }: { split: SplitExtended; isCreator: b
           weight="2"
           level="3"
         >
-          Debtors
+          {t('Debtors')}
         </Title>
       </div>
       {split.debtors.map((debtor) => (
