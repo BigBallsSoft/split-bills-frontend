@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useEffect } from 'react';
 import { useActions } from '@/helpers/use-actions';
+import { useMeQuery } from '@/store/api/user.api';
 
 dayjs.extend(relativeTime);
 
@@ -16,12 +17,27 @@ function SplitsPage() {
   const { showToast } = useActions();
   const navigate = useNavigate();
   const { data, isLoading, isError } = useGetMySplitsQuery();
+  const { isLoading: isMeLoading, isError: isMeError, data: me } = useMeQuery();
 
   useEffect(() => {
     if (isError) {
       showToast({ message: 'Error fetching splits' });
     }
   }, [isLoading]);
+
+  useEffect(() => {
+    if (isMeError) {
+      showToast({ message: 'Error fetching account' });
+    }
+  }, [isMeLoading]);
+
+  const handleCreateSplitClick = () => {
+    if (!me?.cardErip) {
+      showToast({ message: 'You need to fill your card info before creating a split' });
+      return;
+    }
+    navigate('/splits/create');
+  };
 
   return (
     <div className="flex flex-col pt-16">
@@ -102,12 +118,14 @@ function SplitsPage() {
               </div>
             </Cell>
           ))}
-        <Cell
-          className="bg-primary px-4 rounded-2xl d-flex justify-center items-center child-grow-0"
-          onClick={() => navigate('/splits/create')}
-        >
-          <FiPlusCircle className="size-8 my-1.5" />
-        </Cell>
+        {data && (
+          <Cell
+            className="bg-primary px-4 rounded-2xl d-flex justify-center items-center child-grow-0"
+            onClick={handleCreateSplitClick}
+          >
+            <FiPlusCircle className="size-8 my-1.5" />
+          </Cell>
+        )}
       </div>
     </div>
   );
