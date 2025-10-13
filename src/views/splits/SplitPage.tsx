@@ -164,7 +164,7 @@ function SplitPage() {
           ) : (
             <SplitDebtorActions
               split={data}
-              debtorId={data.debtors.find((d) => d.user?.telegramId === tgWebAppData?.user?.id)?.id}
+              debtor={data.debtors.find((d) => d.user?.telegramId === tgWebAppData?.user?.id)}
             />
           )}
         </>

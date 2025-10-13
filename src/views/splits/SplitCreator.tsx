@@ -30,7 +30,7 @@ function SplitCreator({ split }: { split: SplitExtended }) {
           Chat
         </Button>
       </div>
-      <div className="ms-10">
+      <div className="ms-14">
         <Divider />
       </div>
     </div>

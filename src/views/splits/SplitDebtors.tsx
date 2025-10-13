@@ -5,6 +5,7 @@ import { splitsApi } from '@/store/api/splits.api';
 import { type Debtor } from '@/typings/debtors';
 import type { SplitExtended } from '@/typings/splits';
 import { useLaunchParams, openTelegramLink } from '@telegram-apps/sdk-react';
+import { FaCheck } from 'react-icons/fa';
 import { Avatar, Button, Divider, Title } from '@telegram-apps/telegram-ui';
 import React, { useEffect } from 'react';
 
@@ -118,8 +119,14 @@ function SplitDebtors({ split, isCreator }: { split: SplitExtended; isCreator: b
                 {getDebtorText(debtor)}
               </Button>
             )}
+            {isCreator && debtor.payDate && (
+              <FaCheck
+                className="text-blue-400"
+                size={24}
+              />
+            )}
           </div>
-          <div className="ms-10 ">
+          <div className="ms-14">
             <Divider />
           </div>
         </React.Fragment>
