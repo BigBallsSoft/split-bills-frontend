@@ -37,7 +37,7 @@ function SplitDebtorActions({ split, debtor }: { split: SplitExtended; debtor?: 
 
   return (
     <div className="mx-12 mt-4 flex flex-col gap-3">
-      {!debtor?.payDate ? (
+      {!debtor?.payDate && debtor ? (
         <Button
           before={<AiOutlineSignature size={24} />}
           size="l"
