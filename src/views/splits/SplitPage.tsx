@@ -42,6 +42,11 @@ function SplitPage() {
     [data, tgWebAppData]
   );
 
+  const debtor = useMemo(
+    () => data?.debtors.find((d) => d.user?.telegramId === tgWebAppData?.user?.id),
+    [data, tgWebAppData]
+  );
+
   const handleCardNumberClick = () => {
     if (data?.creator?.cardNumber && !isCreator) {
       copyTextToClipboard(data.creator.cardNumber);
@@ -164,10 +169,12 @@ function SplitPage() {
           {isCreator ? (
             <SplitCreatorActions split={data} />
           ) : (
-            <SplitDebtorActions
-              split={data}
-              debtor={data.debtors.find((d) => d.user?.telegramId === tgWebAppData?.user?.id)}
-            />
+            debtor && (
+              <SplitDebtorActions
+                split={data}
+                debtor={debtor}
+              />
+            )
           )}
         </>
       )}
