@@ -29,7 +29,7 @@ function SplitPage() {
   const { tgWebAppData } = useLaunchParams();
 
   const { showToast } = useActions();
-  const { data, isLoading, isError } = useGetSplitByIdQuery(Number(params.id) || 0);
+  const { data, isLoading, isError } = useGetSplitByIdQuery(params.id || '');
 
   useEffect(() => {
     if (isError) {

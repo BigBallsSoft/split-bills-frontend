@@ -8,7 +8,7 @@ export interface AddSplitData {
 }
 
 export interface Split extends Omit<AddSplitData, 'debtors' | 'description'> {
-  id: number;
+  id: string;
   creationDate: string;
   debtors: Debtor[];
   creatorId: number;
